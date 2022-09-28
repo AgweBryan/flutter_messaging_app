@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "172031758449",
+    "project_id": "flutter-messaging-app-90662",
+    "storage_bucket": "flutter-messaging-app-90662.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172031758449:android:daa34eee986092144d8bd0",
+        "android_client_info": {
+          "package_name": "com.agwemedia.flutter_messaging_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "172031758449-7q7b9sgal2t3f5886c5vfvkt6d6neea6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.agwemedia.flutter_messaging_app",
+            "certificate_hash": "871c05eadfec04c39f4b03e6523948f3d84c4b34"
+          }
+        },
+        {
+          "client_id": "172031758449-p7nfurkk3juvo1ajgfe901v3cll9mo5n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgL_a6rtRDUtGYPYsxuIkJ_h3i-bw4tNY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "172031758449-p7nfurkk3juvo1ajgfe901v3cll9mo5n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
