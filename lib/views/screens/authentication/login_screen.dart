@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_messaging_app/utils/colors.dart';
 import 'package:flutter_messaging_app/utils/controllers.dart';
-// import 'package:flutter/shimmer/shimmer.dart';
+import 'package:shimmer/shimmer.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -31,28 +31,26 @@ class _LoginScreenState extends State<LoginScreen> {
         });
         await authController.signInWithGoogle();
       },
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: Colors.transparent, borderRadius: BorderRadius.circular(10)),
-        child: isLoading
-            ? CircularProgressIndicator()
-            : Text(
-                'LOGIN',
-                style: TextStyle(
-                  fontSize: 35,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 1.2,
+      child: Shimmer.fromColors(
+        baseColor: Colors.white,
+        highlightColor: senderColor,
+        child: Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(10)),
+          child: isLoading
+              ? CircularProgressIndicator()
+              : Text(
+                  'LOGIN',
+                  style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1.2,
+                  ),
                 ),
-              ),
+        ),
       ),
     );
   }
 }
-
-/*
-  Shimmer.fromColors(
-    baseColor: Colors.white,
-    highlightColor: senderColor,
-  )
-*/
