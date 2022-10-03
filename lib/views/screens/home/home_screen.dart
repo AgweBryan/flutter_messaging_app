@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_messaging_app/utils/colors.dart';
 import 'package:flutter_messaging_app/utils/controllers.dart';
+import 'package:flutter_messaging_app/views/chat/chat_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -70,9 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
           controller: _pageController,
           onPageChanged: onPageChanged,
           children: [
-            Center(
-              child: Text("Chat list Screen"),
-            ),
+            ChatScreen(),
             Center(
               child: Text("call logs"),
             ),
