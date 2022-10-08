@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_messaging_app/utils/colors.dart';
-import 'package:flutter_messaging_app/utils/controllers.dart';
-import 'package:flutter_messaging_app/views/chat/chat_screen.dart';
+import 'package:flutter_messaging_app/views/screens/chat/chat_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

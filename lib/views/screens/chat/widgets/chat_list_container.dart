@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_messaging_app/utils/colors.dart';
-import 'package:flutter_messaging_app/views/chat/widgets/custom_tile.dart';
+import 'package:flutter_messaging_app/views/screens/chat/widgets/custom_tile.dart';
 
 class ChatListContainer extends StatelessWidget {
   final String currentUserId;

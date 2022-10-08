@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_messaging_app/utils/colors.dart';
 import 'package:flutter_messaging_app/utils/controllers.dart';
 import 'package:flutter_messaging_app/utils/utils.dart';
-import 'package:flutter_messaging_app/views/chat/widgets/chat_list_container.dart';
 import 'package:flutter_messaging_app/views/chat/widgets/new_chat_button.dart';
+import 'package:flutter_messaging_app/views/screens/chat/widgets/chat_list_container.dart';
 import 'package:flutter_messaging_app/views/widgets/custom_appbar.dart';
 
 class ChatScreen extends StatelessWidget {
