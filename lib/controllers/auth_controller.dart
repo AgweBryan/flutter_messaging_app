@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_messaging_app/models/userModel.dart';
 import 'package:flutter_messaging_app/utils/firebase.dart';
+import 'package:flutter_messaging_app/utils/utils.dart';
 import 'package:flutter_messaging_app/views/screens/authentication/login_screen.dart';
 import 'package:flutter_messaging_app/views/screens/home/home_screen.dart';
 import 'package:get/get.dart';
@@ -47,5 +50,34 @@ class AuthController extends GetxController {
   signOut() async {
     await firebaseAuth.signOut();
     Get.offAll(LoginScreen());
+  }
+
+// add signed in user to firebase firestore
+  addCurrentUserToFirestore() async {
+    CustomUser cu = CustomUser(
+      id: currentUser.uid,
+      displayName: currentUser.displayName,
+      email: currentUser.email,
+      username: Util.getUsername(currentUser.email!),
+      photoUrl: currentUser.photoURL,
+    );
+    await firestore.collection('users').doc(currentUser.uid).set(cu.toMap());
+  }
+
+  // Get all users
+  Future<List<CustomUser>> getAllUsers() async {
+    List<CustomUser> usersList = [];
+
+    QuerySnapshot querySnapshot = await firestore.collection('users').get();
+
+    for (var i = 0; i < querySnapshot.docs.length; i++) {
+      if (querySnapshot.docs[i].id != currentUser.uid) {
+        usersList.add(CustomUser.fromJson(
+            querySnapshot.docs[i].data() as Map<String, dynamic>));
+      }
+    }
+
+    print(querySnapshot.docs);
+    return usersList;
   }
 }

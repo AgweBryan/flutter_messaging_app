@@ -30,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
           isLoading = true;
         });
         await authController.signInWithGoogle();
+        await authController.addCurrentUserToFirestore();
       },
       child: Shimmer.fromColors(
         baseColor: Colors.white,
