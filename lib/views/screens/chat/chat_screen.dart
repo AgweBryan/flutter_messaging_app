@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_messaging_app/utils/colors.dart';
 import 'package:flutter_messaging_app/utils/controllers.dart';
 import 'package:flutter_messaging_app/utils/utils.dart';
-import 'package:flutter_messaging_app/views/chat/widgets/new_chat_button.dart';
 import 'package:flutter_messaging_app/views/screens/chat/widgets/chat_list_container.dart';
+import 'package:flutter_messaging_app/views/screens/search/search_screen.dart';
 import 'package:flutter_messaging_app/views/widgets/custom_appbar.dart';
+import 'package:get/get.dart';
 
 class ChatScreen extends StatelessWidget {
   ChatScreen({super.key});
@@ -16,8 +17,25 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: blackColor,
       appBar: _customAppBar(context),
-      floatingActionButton: NewChatbutton(),
+      floatingActionButton: _newChatButton(),
       body: ChatListContainer(currentUserId: cuid),
+    );
+  }
+
+  _newChatButton() {
+    return Container(
+      padding: EdgeInsets.all(25),
+      decoration: BoxDecoration(
+        gradient: fabGradient,
+        borderRadius: BorderRadius.circular(
+          50,
+        ),
+      ),
+      child: Icon(
+        Icons.edit,
+        color: Colors.white,
+        size: 25,
+      ),
     );
   }
 
@@ -36,7 +54,7 @@ class ChatScreen extends StatelessWidget {
       centerTitle: true,
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () => Get.to(() => SearchScreen()),
           icon: Icon(
             Icons.search,
             color: Colors.white,
