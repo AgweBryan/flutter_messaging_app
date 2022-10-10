@@ -40,7 +40,7 @@ dependencies:
   image_picker: null
   intl: null
   permission_handler: null
-  shimmer: 
+  shimmer: null
   timeago: null
 
 dev_dependencies:
