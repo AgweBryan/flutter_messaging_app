@@ -63,21 +63,4 @@ class AuthController extends GetxController {
     );
     await firestore.collection('users').doc(currentUser.uid).set(cu.toMap());
   }
-
-  // Get all users
-  Future<List<CustomUser>> getAllUsers() async {
-    List<CustomUser> usersList = [];
-
-    QuerySnapshot querySnapshot = await firestore.collection('users').get();
-
-    for (var i = 0; i < querySnapshot.docs.length; i++) {
-      if (querySnapshot.docs[i].id != currentUser.uid) {
-        usersList.add(CustomUser.fromJson(
-            querySnapshot.docs[i].data() as Map<String, dynamic>));
-      }
-    }
-
-    print(querySnapshot.docs);
-    return usersList;
-  }
 }
