@@ -3,6 +3,7 @@ import 'package:flutter_messaging_app/controllers/search_controller.dart';
 import 'package:flutter_messaging_app/models/userModel.dart';
 import 'package:flutter_messaging_app/utils/colors.dart';
 import 'package:flutter_messaging_app/views/screens/chat/widgets/custom_tile.dart';
+import 'package:flutter_messaging_app/views/screens/conversation/conversation_screen.dart';
 import 'package:get/get.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -49,7 +50,13 @@ class _SearchScreenState extends State<SearchScreen> {
         );
         return CustomTile(
           mini: false,
-          onTap: () {},
+          onTap: () {
+            Get.to(
+              () => ConversationScreen(
+                user: searchedUser,
+              ),
+            );
+          },
           leading: CircleAvatar(
             backgroundImage: NetworkImage(
               searchedUser.photoUrl!,
