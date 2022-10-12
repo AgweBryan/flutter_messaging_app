@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_messaging_app/controllers/conversation_controller.dart';
 import 'package:flutter_messaging_app/models/userModel.dart';
 import 'package:flutter_messaging_app/utils/colors.dart';
+import 'package:flutter_messaging_app/views/screens/conversation/modal_tile.dart';
 import 'package:flutter_messaging_app/views/widgets/custom_appbar.dart';
 import 'package:get/get.dart';
 
@@ -32,10 +33,116 @@ class _ConversationScreenState extends State<ConversationScreen> {
       body: Obx(() {
         return Column(
           children: [
+            Flexible(
+              child: _messageList(),
+            ),
             _chatControls(),
           ],
         );
       }),
+    );
+  }
+
+  _messageList() {
+    return ListView.builder(
+      itemCount: 6,
+      padding: EdgeInsets.all(10),
+      itemBuilder: (context, i) {
+        return _chatMessageitem();
+      },
+    );
+  }
+
+  _chatMessageitem() {
+    return Container(
+      margin: EdgeInsets.symmetric(
+        vertical: 15,
+      ),
+      child: Container(child: _senderLayout()),
+    );
+  }
+
+  _senderLayout() {
+    Radius messageRadius = Radius.circular(
+      10,
+    );
+
+    return Row(
+      children: [
+        Expanded(
+          child: SizedBox(),
+        ),
+        Container(
+          margin: EdgeInsets.only(
+            top: 12,
+          ),
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * .65,
+          ),
+          decoration: BoxDecoration(
+            color: senderColor,
+            borderRadius: BorderRadius.only(
+              topLeft: messageRadius,
+              topRight: messageRadius,
+              bottomLeft: messageRadius,
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(
+              10,
+            ),
+            child: Text(
+              "Hello" * 20,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  _receiverLayout() {
+    Radius messageRadius = Radius.circular(
+      10,
+    );
+
+    return Row(
+      children: [
+        Expanded(
+          child: SizedBox(),
+        ),
+        Container(
+          margin: EdgeInsets.only(
+            top: 12,
+          ),
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * .65,
+          ),
+          decoration: BoxDecoration(
+            color: receiverColor,
+            borderRadius: BorderRadius.only(
+              bottomRight: messageRadius,
+              topRight: messageRadius,
+              bottomLeft: messageRadius,
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(
+              10,
+            ),
+            child: Text(
+              "Hello" * 20,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -46,14 +153,17 @@ class _ConversationScreenState extends State<ConversationScreen> {
       ),
       child: Row(
         children: [
-          Container(
-            padding: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              gradient: fabGradient,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.add,
+          GestureDetector(
+            onTap: () => addMediaModal(context),
+            child: Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                gradient: fabGradient,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.add,
+              ),
             ),
           ),
           SizedBox(width: 5),
@@ -120,6 +230,72 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   ),
                 )
               : SizedBox(),
+        ],
+      ),
+    );
+  }
+
+  addMediaModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      elevation: 0,
+      backgroundColor: blackColor,
+      builder: (context) => Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 15,
+            ),
+            child: Row(
+              children: [
+                TextButton(
+                  onPressed: () => Get.back(),
+                  child: Icon(
+                    Icons.close,
+                  ),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Content and tools",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Flexible(
+            child: ListView(
+              children: [
+                ModalTile(
+                  title: "Media",
+                  subtitle: "Share photos and video",
+                  icon: Icons.image,
+                ),
+                ModalTile(
+                  title: "File",
+                  subtitle: "Share files",
+                  icon: Icons.tab,
+                ),
+                ModalTile(
+                  title: "Contact",
+                  subtitle: "Share contacts",
+                  icon: Icons.contacts,
+                ),
+                ModalTile(
+                  title: "Location",
+                  subtitle: "Share a location",
+                  icon: Icons.add_location,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
