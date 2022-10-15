@@ -35,7 +35,7 @@ class Message {
     };
   }
 
-  Message fromMap(Map<String, dynamic> map) {
+  static Message fromMap(Map<String, dynamic> map) {
     return Message(
         senderId: map['senderId'],
         receiverId: map['receiverId'],
