@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_messaging_app/controllers/conversation_controller.dart';
+import 'package:flutter_messaging_app/models/message.dart';
 import 'package:flutter_messaging_app/models/userModel.dart';
 import 'package:flutter_messaging_app/utils/colors.dart';
+import 'package:flutter_messaging_app/utils/controllers.dart';
 import 'package:flutter_messaging_app/views/screens/conversation/modal_tile.dart';
 import 'package:flutter_messaging_app/views/widgets/custom_appbar.dart';
 import 'package:get/get.dart';
@@ -27,6 +30,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _conversationController.updateReceiverId(widget.user.id!);
     return Scaffold(
       backgroundColor: blackColor,
       appBar: _customAppBar(context),
@@ -34,7 +38,11 @@ class _ConversationScreenState extends State<ConversationScreen> {
         return Column(
           children: [
             Flexible(
-              child: _messageList(),
+              child: _conversationController.messages.isEmpty
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : _messageList(),
             ),
             _chatControls(),
           ],
@@ -45,24 +53,28 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
   _messageList() {
     return ListView.builder(
-      itemCount: 6,
+      itemCount: _conversationController.messages.length,
       padding: EdgeInsets.all(10),
       itemBuilder: (context, i) {
-        return _chatMessageitem();
+        return _chatMessageitem(_conversationController.messages[i]);
       },
     );
   }
 
-  _chatMessageitem() {
+  _chatMessageitem(Message message) {
     return Container(
       margin: EdgeInsets.symmetric(
         vertical: 15,
       ),
-      child: Container(child: _senderLayout()),
+      child: Container(
+        child: message.senderId == authController.currentUser.uid
+            ? _senderLayout(message)
+            : _receiverLayout(message),
+      ),
     );
   }
 
-  _senderLayout() {
+  _senderLayout(Message message) {
     Radius messageRadius = Radius.circular(
       10,
     );
@@ -91,20 +103,24 @@ class _ConversationScreenState extends State<ConversationScreen> {
             padding: EdgeInsets.all(
               10,
             ),
-            child: Text(
-              "Hello" * 20,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ),
+            child: getMessage(message),
           ),
         ),
       ],
     );
   }
 
-  _receiverLayout() {
+  getMessage(Message message) {
+    return Text(
+      message.message,
+      style: TextStyle(
+        fontSize: 16,
+        color: Colors.white,
+      ),
+    );
+  }
+
+  _receiverLayout(Message message) {
     Radius messageRadius = Radius.circular(
       10,
     );
@@ -130,17 +146,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.all(
-              10,
-            ),
-            child: Text(
-              "Hello" * 20,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
+              padding: EdgeInsets.all(
+                10,
               ),
-            ),
-          ),
+              child: getMessage(message)),
         ),
       ],
     );
@@ -225,14 +234,27 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   child: IconButton(
                     icon: Icon(
                       Icons.send,
+                      size: 15,
                     ),
-                    onPressed: () {},
+                    onPressed: () => sendMessage(),
                   ),
                 )
               : SizedBox(),
         ],
       ),
     );
+  }
+
+  sendMessage() {
+    Message message = Message(
+        receiverId: widget.user.id!,
+        senderId: authController.currentUser.uid,
+        message: _textFieldController.text,
+        timestamp: FieldValue.serverTimestamp(),
+        type: "text");
+
+    _conversationController.updateIsTyping('');
+    _textFieldController.text = '';
   }
 
   addMediaModal(BuildContext context) {
